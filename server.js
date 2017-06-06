@@ -9,10 +9,10 @@ var mongoose = require("mongoose")
 var methodOverride = require("method-override")
 var path = require("path");
 // Requiring our models
-
+var note = require("./models/note.js");
+var article = require("./models/article.js");
 // Require request and cheerio. This makes the scraping possible
-var request = require("request");
-var cheerio = require("cheerio");
+
 // Set mongoose to leverage built in JavaScript ES6 Promises
 var PORT = process.env.PORT || 8080;
 

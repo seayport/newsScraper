@@ -2,13 +2,14 @@
   "name": "news-scraper",
   "version": "1.0.0",
   "description": "homework 18",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "newsScraper"
+    "url": "git+https://github.com/seayport/newsScraper.git"
   },
   "author": "Sandy",
   "license": "ISC",
@@ -17,7 +18,6 @@
     "cheerio": "^0.22.0",
     "express": "^4.15.3",
     "express-handlebars": "^3.0.0",
-    "mongoose": "^4.10.1",
-    "request": "^2.81.0"
+    "mongoose": "^4.10.1",    "request": "^2.81.0"
   }
 }

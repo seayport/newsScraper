@@ -16,7 +16,7 @@ var request = require("request");
 var cheerio = require("cheerio");
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 80;
 
 // Initialize Express
 var app = express();
@@ -33,8 +33,20 @@ app.use(express.static(process.cwd() + "/public"));
 // Overriding with POST having ?_method=DELETE
 app.use(methodOverride("_method"));
 
-// Setting up the Database configuration with mongoose
-mongoose.connect("mongodb://localhost/articlesDB");
+//-------------------Database configuration with Mongoose----------------------------------------------
+//--------------------Define local MongoDB URI-----------------------
+var databaseUri = "mongodb://localhost/articlesDB";
+//------------------------------------------------------------------
+if (process.env.MONGODB_URI) {
+  //THIS EXECUTES IF THIS IS BEING EXECUTED IN YOUR HEROKU APP
+  mongoose.connect("mongodb://heroku_ssf18l2s:laj94u8p5ilcoqnnjii0pcs471@ds111922.mlab.com:11922/heroku_ssf18l2s")
+
+} else {
+  //THIS EXECUTES IF THIS IS BEING EXECUTED ON YOUR LOCAL MACHINE
+  mongoose.connect(databaseUri);
+}
+//-------------------End database configuration--------------------------
+
 var db = mongoose.connection;
 
 // Show any mongoose errors

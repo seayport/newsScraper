@@ -39,11 +39,11 @@ var databaseUri = "mongodb://localhost/articlesDB";
 //------------------------------------------------------------------
 if (process.env.MONGODB_URI) {
   //THIS EXECUTES IF THIS IS BEING EXECUTED IN YOUR HEROKU APP
-  mongoose.connect("mongodb://heroku_ssf18l2s:laj94u8p5ilcoqnnjii0pcs471@ds111922.mlab.com:11922/heroku_ssf18l2s")
+mongoose.connect("mongodb://heroku_ssf18l2s:laj94u8p5ilcoqnnjii0pcs471@ds111922.mlab.com:11922/heroku_ssf18l2s")
 
 } else {
   //THIS EXECUTES IF THIS IS BEING EXECUTED ON YOUR LOCAL MACHINE
-  mongoose.connect(databaseUri);
+mongoose.connect(databaseUri);
 }
 //-------------------End database configuration--------------------------
 

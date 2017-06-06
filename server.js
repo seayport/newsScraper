@@ -21,10 +21,7 @@ var PORT = process.env.PORT || 8080;
 var app = express();
 
 // Setting up the Express app to handle data parsing
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.text());
-app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+
 
 app.get('/', function(req, res){
   res.send('hello world');

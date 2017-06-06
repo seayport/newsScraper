@@ -190,29 +190,29 @@ app.get("/saved/:id", function(req, res) {
 });
 
 // Create a new note or replace an existing note
-app.post("/saved/:id", function(req, res) {
+app.post("/submit", function(req, res) {
   // Create a new note and pass the req.body to the entry
   var newNote = new Note(req.body);
+  var currentArticleID = req.params.id;
   // And save the new note the db
   newNote.save(function(error, doc) {
 
     // Log any errors
     if (error) {
-      console.log(error);
+      res.send(error);
     }
     // Otherwise
     else {
       // Use the article id to find and update it's note
-      article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc._id })
-      // Execute the above query
-      .exec(function(err, doc) {
-        // Log any errors
+      article.findOneAndUpdate({}, { $push: { "notes": doc._id } }, { new: true}, function(error, newdoc)  {
+
+       // send any errors to the browserLog any errors
         if (err) {
-          console.log(err);
+          res.send(err);
         }
         else {
-          // Or send the document to the browser
-          res.send(doc);
+          // Or send the newdoc to the browser
+          res.send(newdoc);
         }
       });
     }
@@ -235,12 +235,26 @@ app.get("/saved/:id", function(req, res) {
     }
   });
 });
-
+// Route to see notes we have added
+app.get("/notes", function(req, res) {
+  // Find all notes in the note collection with our Note model
+  Note.find({}, function(error, doc) {
+    // Send any errors to the browser
+    if (error) {
+      res.send(error);
+    }
+    // Or send the doc to the browser
+    else {
+      res.send(doc);
+    }
+  });
+});
 // Listen on port 3000
 app.listen(PORT, function() {
   console.log("App running on port " + PORT);
 });
  
+
 
 
 

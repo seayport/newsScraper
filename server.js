@@ -3,6 +3,16 @@
 
 // Dependencies
 var express = require("express");
+var bodyParser = require("body-parser")
+var exphbs = require("express-handlebars")
+var mongoose = require("mongoose")
+var methodOverride = require("method-override")
+var path = require("path");
+// Requiring our models
+
+// Require request and cheerio. This makes the scraping possible
+var request = require("request");
+var cheerio = require("cheerio");
 // Set mongoose to leverage built in JavaScript ES6 Promises
 var PORT = process.env.PORT || 8080;
 

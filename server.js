@@ -10,7 +10,7 @@ var methodOverride = require("method-override")
 var path = require("path");
 // Requiring our models
 var note = require("./models/note.js");
-var article = require("./models/article.js");
+var Article = require("./models/article.js");
 // Require request and cheerio. This makes the scraping possible
 var request = require("request");
 var cheerio = require("cheerio");
@@ -115,7 +115,7 @@ app.get("/scrape", function(req, res) {
 // This will get the articles we scraped from the mongoDB
 app.get("/", function(req, res) {
   // Grab every doc in the Articles array
-  article.find({}, function(error, doc) {
+  Article.find({}, function(error, doc) {
     // Log any errors
     if (error) {
       console.log(error);
@@ -131,7 +131,7 @@ app.get("/", function(req, res) {
 
 app.put("/:id", function(req, res) {
   // Use the article id to find and update it's status to "saved"
-  article.findOneAndUpdate({ "_id": req.params.id }, { "saved": req.body.saved })
+  Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": req.body.saved })
   // Execute the above query
     .exec(function(err, doc) {
       // Log any errors
@@ -148,7 +148,7 @@ app.put("/:id", function(req, res) {
 
 app.get("/saved", function(req, res) {
   // Grab every doc in the Articles array that is saved
-  article.find({ saved: true }, function(error, doc) {
+  Article.find({ saved: true }, function(error, doc) {
     // Log any errors
     if (error) {
       console.log(error);
@@ -167,7 +167,7 @@ app.get("/saved", function(req, res) {
 
 app.put("/delete/:id", function(req, res) {
   // Delete an article based on it's ObjectId
-  article.findOneAndUpdate({ "_id": req.params.id }, { "saved": req.body.saved })
+  Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": req.body.saved })
   // Execute the above query
     .exec(function(err, doc) {
       // Log any errors
@@ -185,7 +185,7 @@ app.put("/delete/:id", function(req, res) {
 // Grab an article by it's ObjectId
 app.get("/saved/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-  article.findOne({ "_id": req.params.id })
+  Article.findOne({ "_id": req.params.id })
   // Populating all of the notes associated with it
   .populate("note")
   // Executing the query
@@ -216,7 +216,7 @@ app.post("/submit", function(req, res) {
     // Otherwise
     else {
       // Use the article id to find and update it's note
-      article.findOneAndUpdate({}, { $push: { "notes": doc._id } }, { new: true}, function(error, newdoc)  {
+      Article.findOneAndUpdate({}, { $push: { "notes": doc._id } }, { new: true}, function(error, newdoc)  {
 
        // send any errors to the browserLog any errors
         if (err) {
